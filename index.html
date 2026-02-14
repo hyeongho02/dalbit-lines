@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dalbit Lines</title>
+  <meta name="description" content="Dalbit Lines — one line a day, three reflections. WHITE for calm, DARK for reality." />
+  <meta property="og:title" content="Dalbit Lines" />
+  <meta property="og:description" content="Quiet luxury. Korean-inspired nacre signature. WHITE / DARK. KOR / ENG." />
+  <meta name="theme-color" content="#0b0a08" />
+
+  <style>
+    /* =========
+      Dalbit Lines
+      Quiet luxury, lots of whitespace, subtle nacre
+    ========= */
+
+    :root{
+      /* Typography */
+      --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --font-serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
+
+      /* Layout */
+      --max: 1040px;
+      --r-lg: 26px;
+      --r-md: 18px;
+
+      /* Motion */
+      --t: 160ms;
+
+      /* WHITE theme (Ivory + copper nacre) */
+      --w-bg: #f6f0e6;
+      --w-card: rgba(255,255,255,.65);
+      --w-ink: rgba(22,18,14,.90);
+      --w-muted: rgba(22,18,14,.62);
+      --w-line: rgba(22,18,14,.10);
+      --w-shadow: 0 18px 55px rgba(30,18,10,.10);
+
+      /* copper nacre: subtle */
+      --cu1: rgba(196,138,88,.70);
+      --cu2: rgba(226,190,140,.45);
+      --cu3: rgba(154,104,70,.35);
+
+      /* DARK theme (Black + silver nacre) */
+      --d-bg: #0b0a08;
+      --d-card: rgba(255,255,255,.06);
+      --d-ink: rgba(255,255,255,.88);
+      --d-muted: rgba(255,255,255,.60);
+      --d-line: rgba(255,255,255,.12);
+      --d-shadow: 0 22px 70px rgba(0,0,0,.55);
+
+      /* silver nacre: subtle */
+      --ag1: rgba(240,240,240,.55);
+      --ag2: rgba(200,210,220,.35);
+      --ag3: rgba(255,255,255,.18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--font-sans);
+      letter-spacing: -0.2px;
+      overflow-x:hidden;
+      background: var(--w-bg);
+      color: var(--w-ink);
+      transition: background var(--t) ease, color var(--t) ease;
+    }
+
+    body[data-theme="dark"]{
+      background: var(--d-bg);
+      color: var(--d-ink);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button{ font-family: inherit; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+      position: relative;
+    }
+
+    /* Subtle nacre aura (signature) */
+    .nacre{
+      position:absolute;
+      inset:-120px -80px auto -80px;
+      height: 520px;
+      pointer-events:none;
+      opacity:.70;
+      filter: blur(.2px);
+      mix-blend-mode: multiply;
+      transition: opacity var(--t) ease, mix-blend-mode var(--t) ease;
+    }
+    body[data-theme="dark"] .nacre{
+      mix-blend-mode: screen;
+      opacity:.55;
+    }
+
+    .nacre::before,
+    .nacre::after{
+      content:"";
+      position:absolute;
+      border-radius: 50%;
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 67%, #000 68%);
+      mask: radial-gradient(circle at 50% 50%, transparent 67%, #000 68%);
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    /* copper ring */
+    .nacre::before{
+      width: 520px; height: 520px;
+      left: 80px; top: 20px;
+      background: conic-gradient(from 210deg,
+        transparent,
+        var(--cu2),
+        var(--cu1),
+        var(--cu3),
+        transparent
+      );
+      opacity:.55;
+    }
+
+    /* silver ring (used in dark) */
+    .nacre::after{
+      width: 640px; height: 640px;
+      left: 420px; top: -70px;
+      background: conic-gradient(from 200deg,
+        transparent,
+        var(--ag2),
+        var(--ag1),
+        var(--ag3),
+        transparent
+      );
+      opacity:.35;
+      animation-duration: 18s;
+    }
+
+    @keyframes drift{
+      0%{ transform: translateY(0) rotate(0deg); }
+      50%{ transform: translateY(14px) rotate(8deg); }
+      100%{ transform: translateY(0) rotate(0deg); }
+    }
+
+    /* Top bar */
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 4px 2px 18px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 650;
+      letter-spacing: .2px;
+    }
+
+    .mark{
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--cu1), var(--cu2), rgba(255,255,255,.35));
+      box-shadow: 0 0 0 1px rgba(22,18,14,.12);
+      transition: background var(--t) ease, box-shadow var(--t) ease;
+    }
+    body[data-theme="dark"] .mark{
+      background: linear-gradient(135deg, var(--ag1), var(--ag2), rgba(255,255,255,.10));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.14);
+    }
+
+    .tagline{
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--w-muted);
+      max-width: 560px;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .tagline{ color: var(--d-muted); }
+
+    .controls{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:inline-flex;
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      border: 1px solid var(--w-line);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      transition: background var(--t) ease, border-color var(--t) ease;
+    }
+    body[data-theme="dark"] .pill{
+      border-color: var(--d-line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .pill button{
+      border:0;
+      background: transparent;
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 12px;
+      color: var(--w-muted);
+      transition: background var(--t) ease, color var(--t) ease, box-shadow var(--t) ease;
+    }
+    body[data-theme="dark"] .pill button{ color: var(--d-muted); }
+
+    .pill button[aria-pressed="true"]{
+      color: var(--w-ink);
+      background: rgba(255,255,255,.72);
+      box-shadow: inset 0 0 0 1px rgba(22,18,14,.08);
+    }
+    body[data-theme="dark"] .pill button[aria-pressed="true"]{
+      color: var(--d-ink);
+      background: rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 6px;
+      border-radius: var(--r-lg);
+      border: 1px solid var(--w-line);
+      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.55));
+      box-shadow: var(--w-shadow);
+      overflow:hidden;
+      position: relative;
+      transition: border-color var(--t) ease, background var(--t) ease, box-shadow var(--t) ease;
+    }
+    body[data-theme="dark"] .hero{
+      border-color: var(--d-line);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      box-shadow: var(--d-shadow);
+    }
+
+    /* Nacre border (very subtle) */
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: var(--r-lg);
+      padding:1px;
+      background: linear-gradient(135deg,
+        transparent,
+        rgba(196,138,88,.22),
+        rgba(226,190,140,.18),
+        transparent
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.65;
+      transition: opacity var(--t) ease, background var(--t) ease;
+    }
+    body[data-theme="dark"] .hero::before{
+      background: linear-gradient(135deg,
+        transparent,
+        rgba(240,240,240,.22),
+        rgba(200,210,220,.16),
+        transparent
+      );
+      opacity:.55;
+    }
+
+    .hero-pad{
+      padding: 26px 22px;
+    }
+
+    .title{
+      margin:0;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 720;
+      letter-spacing: -0.5px;
+      font-family: var(--font-serif);
+    }
+
+    .sub{
+      margin: 10px 0 0;
+      color: var(--w-muted);
+      line-height: 1.7;
+      font-size: 14px;
+      max-width: 720px;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .sub{ color: var(--d-muted); }
+
+    /* Mode tabs */
+    .tabs{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .tab{
+      border-radius: 999px;
+      padding: 10px 12px;
+      border: 1px solid var(--w-line);
+      background: rgba(255,255,255,.62);
+      cursor:pointer;
+      font-size: 12px;
+      color: var(--w-muted);
+      transition: transform var(--t) ease, background var(--t) ease, border-color var(--t) ease, color var(--t) ease;
+      display:inline-flex;
+      gap: 8px;
+      align-items:center;
+    }
+    .tab:hover{ transform: translateY(-1px); }
+    .tab strong{ color: var(--w-ink); font-weight:650; }
+
+    body[data-theme="dark"] .tab{
+      border-color: var(--d-line);
+      background: rgba(255,255,255,.04);
+      color: var(--d-muted);
+    }
+    body[data-theme="dark"] .tab strong{ color: var(--d-ink); }
+
+    .tab[aria-selected="true"]{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(22,18,14,.12);
+    }
+    body[data-theme="dark"] .tab[aria-selected="true"]{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    /* Main grid */
+    .grid{
+      margin-top: 22px;
+      display:grid;
+      grid-template-columns: 1.3fr .9fr;
+      gap: 16px;
+      padding: 0 22px 22px;
+    }
+    @media (max-width: 880px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border-radius: var(--r-lg);
+      border: 1px solid var(--w-line);
+      background: rgba(255,255,255,.62);
+      box-shadow: 0 18px 55px rgba(30,18,10,.07);
+      overflow:hidden;
+      transition: background var(--t) ease, border-color var(--t) ease, box-shadow var(--t) ease;
+    }
+    body[data-theme="dark"] .card{
+      border-color: var(--d-line);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 20px 70px rgba(0,0,0,.40);
+    }
+
+    .card-head{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--w-line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      transition: border-color var(--t) ease;
+    }
+    body[data-theme="dark"] .card-head{ border-bottom-color: var(--d-line); }
+
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--w-muted);
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .kicker{ color: var(--d-muted); }
+
+    .date{
+      font-size: 12px;
+      color: rgba(22,18,14,.45);
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .date{ color: rgba(255,255,255,.42); }
+
+    .card-body{
+      padding: 22px 18px 18px;
+    }
+
+    .quote{
+      margin:0 0 14px;
+      font-size: 22px;
+      line-height: 1.42;
+      font-weight: 740;
+      letter-spacing: -0.4px;
+    }
+
+    .refs{
+      margin:0;
+      padding-left: 18px;
+      color: var(--w-muted);
+      line-height: 1.72;
+      font-size: 14px;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .refs{ color: var(--d-muted); }
+    .refs li{ margin: 8px 0; }
+
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    .mini{
+      padding: 16px 16px;
+      border-radius: var(--r-lg);
+    }
+    .mini h3{
+      margin:0 0 8px;
+      font-size: 13px;
+      letter-spacing:.15px;
+      font-weight: 680;
+    }
+    .mini p{
+      margin:0;
+      color: var(--w-muted);
+      line-height: 1.65;
+      font-size: 13px;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .mini p{ color: var(--d-muted); }
+
+    .hint{
+      margin-top: 10px;
+      color: rgba(22,18,14,.48);
+      font-size: 12px;
+      line-height: 1.55;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] .hint{ color: rgba(255,255,255,.42); }
+
+    .form{
+      display:flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .form input{
+      flex:1;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--w-line);
+      background: rgba(255,255,255,.82);
+      color: var(--w-ink);
+      outline:none;
+      transition: background var(--t) ease, border-color var(--t) ease, color var(--t) ease;
+    }
+    body[data-theme="dark"] .form input{
+      border-color: var(--d-line);
+      background: rgba(255,255,255,.03);
+      color: var(--d-ink);
+    }
+
+    .btn{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--w-line);
+      background: rgba(255,255,255,.70);
+      color: var(--w-ink);
+      cursor:pointer;
+      transition: transform var(--t) ease, background var(--t) ease, border-color var(--t) ease, color var(--t) ease;
+      white-space:nowrap;
+      position: relative;
+      overflow:hidden;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.78); }
+    body[data-theme="dark"] .btn{
+      border-color: var(--d-line);
+      background: rgba(255,255,255,.06);
+      color: var(--d-ink);
+    }
+    body[data-theme="dark"] .btn:hover{ background: rgba(255,255,255,.08); }
+
+    /* Nacre button edge (subtle, copper on white, silver on dark) */
+    .btn::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius: 14px;
+      padding: 1px;
+      background: linear-gradient(135deg, transparent, rgba(196,138,88,.30), rgba(226,190,140,.22), transparent);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.8;
+      transition: background var(--t) ease, opacity var(--t) ease;
+    }
+    body[data-theme="dark"] .btn::before{
+      background: linear-gradient(135deg, transparent, rgba(240,240,240,.26), rgba(200,210,220,.18), transparent);
+      opacity:.7;
+    }
+
+    footer{
+      padding: 10px 22px 22px;
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap:wrap;
+      color: rgba(22,18,14,.50);
+      font-size: 12px;
+      transition: color var(--t) ease;
+    }
+    body[data-theme="dark"] footer{ color: rgba(255,255,255,.42); }
+
+    .links{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    .links a{
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--t) ease, color var(--t) ease;
+    }
+    .links a:hover{
+      border-bottom-color: currentColor;
+    }
+
+    /* Small utility */
+    .sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  </style>
+</head>
+
+<body data-lang="ko" data-region="korea" data-mode="white" data-theme="white">
+  <div class="wrap">
+    <div class="nacre" aria-hidden="true"></div>
+
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <span class="mark" aria-hidden="true"></span>
+          <span>Dalbit Lines</span>
+        </div>
+        <div class="tagline" id="tagline">
+          달빛처럼 은은하게 — 매일 한 줄, 그리고 세 줄의 해설.
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="pill" role="group" aria-label="Language">
+          <button id="langKo" aria-pressed="true">KOR</button>
+          <button id="langEn" aria-pressed="false">ENG</button>
+        </div>
+
+        <div class="pill" role="group" aria-label="Region">
+          <button id="regionKr" aria-pressed="true">KOREA</button>
+          <button id="regionGlobal" aria-pressed="false">GLOBAL</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-pad">
+        <h1 class="title" id="heroTitle">Light & Shadow</h1>
+        <p class="sub" id="heroSub">
+          WHITE는 회복을, DARK는 현실을. 오늘의 한 줄로 균형을 맞춥니다.
+        </p>
+
+        <div class="tabs" role="tablist" aria-label="Mode">
+          <button class="tab" id="tabWhite" role="tab" aria-selected="true">
+            🤍 <strong id="lblWhite">WHITE</strong> <span id="hintWhite" style="opacity:.75">— Calm</span>
+          </button>
+          <button class="tab" id="tabDark" role="tab" aria-selected="false">
+            🖤 <strong id="lblDark">DARK</strong> <span id="hintDark" style="opacity:.75">— Reality</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card" aria-live="polite">
+          <div class="card-head">
+            <div class="kicker" id="kicker">TODAY</div>
+            <div class="date" id="dateText">—</div>
+          </div>
+          <div class="card-body">
+            <h2 class="quote" id="quote">—</h2>
+            <ol class="refs" id="refs"></ol>
+          </div>
+        </article>
+
+        <aside class="side">
+          <div class="card mini">
+            <h3 id="aboutTitle">About</h3>
+            <p id="aboutText">
+              Dalbit Lines는 한국의 자개처럼 “과하지 않은 빛”을 시그니처로, 감정(WHITE)과 현실(DARK)의 균형을 매일 기록합니다.
+            </p>
+            <p class="hint" id="aboutHint">
+              운영 팁: 처음 3개월은 “매일 올리는 것”만 성공 기준으로 잡아도 됩니다.
+            </p>
+          </div>
+
+          <div class="card mini">
+            <h3 id="newsTitle">Newsletter</h3>
+            <p id="newsText">아침에 한 번, 오늘의 한 줄을 이메일로.</p>
+            <form class="form" id="newsForm">
+              <label class="sr" for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required />
+              <button class="btn" type="submit" id="subBtn">Subscribe</button>
+            </form>
+            <p class="hint" id="newsHint">
+              현재는 데모 폼이에요. 나중에 Substack/Beehiiv 링크로 바로 연결하면 됩니다.
+            </p>
+            <div class="links" style="margin-top:10px">
+              <a href="#" id="newsletterLink">Open newsletter</a>
+            </div>
+          </div>
+
+          <div class="card mini">
+            <h3 id="shareTitle">Share</h3>
+            <p id="shareText">인스타에서는 “한 문장 이미지”가 가장 퍼집니다.</p>
+            <div class="links" style="margin-top:10px">
+              <a href="#" id="copyUrl">Copy URL</a>
+              <a href="#" id="copyToday">Copy today text</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <div>© <span id="year"></span> Dalbit Lines</div>
+        <div class="links">
+          <a href="#" id="jumpWhite">WHITE</a>
+          <a href="#" id="jumpDark">DARK</a>
+          <a href="#" id="jumpTop">Top</a>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+    // ==========================
+    // 1) 여기만 고치면 매일 업데이트 끝
+    // ==========================
+    // region: korea | global
+    // mode: white | dark
+    const DATA = {
+      ko: {
+        ui: {
+          tagline: "달빛처럼 은은하게 — 매일 한 줄, 그리고 세 줄의 해설.",
+          heroTitle: "Light & Shadow",
+          heroSub: "WHITE는 회복을, DARK는 현실을. 오늘의 한 줄로 균형을 맞춥니다.",
+          aboutTitle: "About",
+          aboutText: "Dalbit Lines는 한국의 자개처럼 “과하지 않은 빛”을 시그니처로, 감정(WHITE)과 현실(DARK)의 균형을 매일 기록합니다.",
+          aboutHint: "운영 팁: 처음 3개월은 “매일 올리는 것”만 성공 기준으로 잡아도 됩니다.",
+          newsTitle: "Newsletter",
+          newsText: "아침에 한 번, 오늘의 한 줄을 이메일로.",
+          newsHint: "현재는 데모 폼이에요. 나중에 Substack/Beehiiv 링크로 바로 연결하면 됩니다.",
+          shareTitle: "Share",
+          shareText: "인스타에서는 “한 문장 이미지”가 가장 퍼집니다.",
+          today: "TODAY",
+          subscribe: "Subscribe",
+          openNewsletter: "뉴스레터 열기"
+        },
+        korea: {
+          white: {
+            quote: "완벽하지 않아도, 오늘을 계속하면 충분하다.",
+            ref: [
+              "완벽함은 속도를 늦추고 불안을 키운다.",
+              "60점이라도 반복하면 결국 내 것이 된다.",
+              "오늘은 ‘멈추지 않기’만 해도 성공이다."
+            ]
+          },
+          dark: {
+            quote: "호의는 기본값이 아니다. 신뢰는 쌓아야 생긴다.",
+            ref: [
+              "사회는 감정보다 결과에 반응한다.",
+              "경계가 없으면 존중도 흐려진다.",
+              "작게 약속하고, 꾸준히 지켜라."
+            ]
+          }
+        },
+        global: {
+          white: {
+            quote: "쉬는 건 약함이 아니라, 다시 나아가기 위한 선택이다.",
+            ref: [
+              "휴식은 회피가 아니라 회복이다.",
+              "내 속도를 지키는 사람이 오래 간다.",
+              "오늘은 ‘회복 루틴’ 하나만 지켜도 된다."
+            ]
+          },
+          dark: {
+            quote: "아무도 너를 구해주지 않는다. 그래서 선택권은 너에게 있다.",
+            ref: [
+              "현실을 인정하면 전략이 생긴다.",
+              "책임을 잡는 순간 통제감이 올라간다.",
+              "작은 실행이 너를 보호한다."
+            ]
+          }
+        }
+      },
+
+      en: {
+        ui: {
+          tagline: "Subtle like moonlight — one line a day, three reflections.",
+          heroTitle: "Light & Shadow",
+          heroSub: "WHITE restores. DARK sharpens. One line to balance your day.",
+          aboutTitle: "About",
+          aboutText: "Dalbit Lines carries a Korean nacre signature—quiet shimmer, never loud—balancing emotion (WHITE) and reality (DARK) every day.",
+          aboutHint: "Tip: For the first 3 months, your only goal is consistency.",
+          newsTitle: "Newsletter",
+          newsText: "Once in the morning, one line in your inbox.",
+          newsHint: "This is a demo form. Later, link it to Substack/Beehiiv and you’re done.",
+          shareTitle: "Share",
+          shareText: "On Instagram, a single-line image travels fastest.",
+          today: "TODAY",
+          subscribe: "Subscribe",
+          openNewsletter: "Open newsletter"
+        },
+        korea: {
+          white: {
+            quote: "You don’t need perfection—only continuity.",
+            ref: [
+              "Perfection slows you down and feeds anxiety.",
+              "A solid 60% repeated becomes mastery.",
+              "Today, simply don’t stop."
+            ]
+          },
+          dark: {
+            quote: "Kindness isn’t a default. Trust is earned.",
+            ref: [
+              "People respond to outcomes more than feelings.",
+              "Without boundaries, respect dissolves.",
+              "Make small promises—and keep them."
+            ]
+          }
+        },
+        global: {
+          white: {
+            quote: "Rest isn’t weakness. It’s a decision to continue.",
+            ref: [
+              "Rest is recovery, not escape.",
+              "Those who protect their pace last longer.",
+              "Today, keep one recovery ritual."
+            ]
+          },
+          dark: {
+            quote: "No one is coming to save you—so your choices matter.",
+            ref: [
+              "Acceptance creates strategy.",
+              "Ownership increases control.",
+              "Small actions protect you."
+            ]
+          }
+        }
+      }
+    };
+
+    // ==========================
+    // 2) 상태
+    // ==========================
+    const state = {
+      lang: "ko",       // ko | en
+      region: "korea",  // korea | global
+      mode: "white",    // white | dark (content mode)
+    };
+
+    // ==========================
+    // 3) 엘리먼트
+    // ==========================
+    const $ = (id) => document.getElementById(id);
+
+    const els = {
+      tagline: $("tagline"),
+      heroTitle: $("heroTitle"),
+      heroSub: $("heroSub"),
+      aboutTitle: $("aboutTitle"),
+      aboutText: $("aboutText"),
+      aboutHint: $("aboutHint"),
+      newsTitle: $("newsTitle"),
+      newsText: $("newsText"),
+      newsHint: $("newsHint"),
+      shareTitle: $("shareTitle"),
+      shareText: $("shareText"),
+      kicker: $("kicker"),
+      dateText: $("dateText"),
+      quote: $("quote"),
+      refs: $("refs"),
+      year: $("year"),
+
+      langKo: $("langKo"),
+      langEn: $("langEn"),
+      regionKr: $("regionKr"),
+      regionGlobal: $("regionGlobal"),
+
+      tabWhite: $("tabWhite"),
+      tabDark: $("tabDark"),
+      hintWhite: $("hintWhite"),
+      hintDark: $("hintDark"),
+
+      newsForm: $("newsForm"),
+      subBtn: $("subBtn"),
+      newsletterLink: $("newsletterLink"),
+
+      copyUrl: $("copyUrl"),
+      copyToday: $("copyToday"),
+
+      jumpWhite: $("jumpWhite"),
+      jumpDark: $("jumpDark"),
+      jumpTop: $("jumpTop"),
+    };
+
+    // ==========================
+    // 4) 렌더
+    // ==========================
+    function formatDate(lang){
+      const d = new Date();
+      const opts = lang === "ko"
+        ? { year:"numeric", month:"long", day:"numeric" }
+        : { year:"numeric", month:"short", day:"numeric" };
+      return d.toLocaleDateString(lang === "ko" ? "ko-KR" : "en-US", opts);
+    }
+
+    function applyThemeForMode(){
+      // 디자인 테마는 "mode"에 따라 바뀜 (요청: white=ivory+copper, dark=black+silver)
+      document.body.dataset.theme = state.mode;
+    }
+
+    function render(){
+      const t = DATA[state.lang];
+      const ui = t.ui;
+      const pack = t[state.region][state.mode];
+
+      els.tagline.textContent = ui.tagline;
+      els.heroTitle.textContent = ui.heroTitle;
+      els.heroSub.textContent = ui.heroSub;
+
+      els.aboutTitle.textContent = ui.aboutTitle;
+      els.aboutText.textContent = ui.aboutText;
+      els.aboutHint.textContent = ui.aboutHint;
+
+      els.newsTitle.textContent = ui.newsTitle;
+      els.newsText.textContent = ui.newsText;
+      els.newsHint.textContent = ui.newsHint;
+
+      els.shareTitle.textContent = ui.shareTitle;
+      els.shareText.textContent = ui.shareText;
+
+      els.kicker.textContent = ui.today;
+      els.dateText.textContent = formatDate(state.lang);
+
+      els.quote.textContent = pack.quote;
+      els.refs.innerHTML = "";
+      pack.ref.forEach(line=>{
+        const li = document.createElement("li");
+        li.textContent = line;
+        els.refs.appendChild(li);
+      });
+
+      // buttons states
+      els.langKo.setAttribute("aria-pressed", String(state.lang==="ko"));
+      els.langEn.setAttribute("aria-pressed", String(state.lang==="en"));
+      els.regionKr.setAttribute("aria-pressed", String(state.region==="korea"));
+      els.regionGlobal.setAttribute("aria-pressed", String(state.region==="global"));
+
+      els.tabWhite.setAttribute("aria-selected", String(state.mode==="white"));
+      els.tabDark.setAttribute("aria-selected", String(state.mode==="dark"));
+
+      // subscribe text
+      els.subBtn.textContent = ui.subscribe;
+      els.newsletterLink.textContent = ui.openNewsletter;
+
+      // keep <html lang>
+      document.documentElement.lang = state.lang === "ko" ? "ko" : "en";
+
+      // theme
+      applyThemeForMode();
+    }
+
+    // ==========================
+    // 5) 이벤트
+    // ==========================
+    els.langKo.addEventListener("click", ()=>{ state.lang="ko"; render(); });
+    els.langEn.addEventListener("click", ()=>{ state.lang="en"; render(); });
+
+    els.regionKr.addEventListener("click", ()=>{ state.region="korea"; render(); });
+    els.regionGlobal.addEventListener("click", ()=>{ state.region="global"; render(); });
+
+    els.tabWhite.addEventListener("click", ()=>{ state.mode="white"; render(); });
+    els.tabDark.addEventListener("click", ()=>{ state.mode="dark"; render(); });
+
+    // Newsletter (demo)
+    const NEWSLETTER_URL = ""; // <- 여기에 Substack/Beehiiv 구독 URL 넣기 (예: https://your.substack.com)
+    els.newsletterLink.addEventListener("click", (e)=>{
+      e.preventDefault();
+      if(NEWSLETTER_URL){
+        window.open(NEWSLETTER_URL, "_blank");
+      } else {
+        alert(state.lang==="ko"
+          ? "아직 뉴스레터 링크가 설정되지 않았어요. 코드의 NEWSLETTER_URL에 링크를 넣어주세요!"
+          : "Newsletter link not set yet. Add your URL to NEWSLETTER_URL in the code.");
+      }
+    });
+
+    els.newsForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      if(NEWSLETTER_URL){
+        window.open(NEWSLETTER_URL, "_blank");
+      } else {
+        alert(state.lang==="ko"
+          ? "지금은 데모입니다. NEWSLETTER_URL에 링크를 넣으면 구독 페이지로 이동하게 할 수 있어요."
+          : "This is a demo. Add your newsletter link to NEWSLETTER_URL to redirect.");
+      }
+      e.target.reset();
+    });
+
+    // Copy helpers
+    els.copyUrl.addEventListener("click", async (e)=>{
+      e.preventDefault();
+      try{
+        await navigator.clipboard.writeText(window.location.href);
+        alert(state.lang==="ko" ? "URL 복사됨!" : "URL copied!");
+      }catch{
+        prompt("Copy URL:", window.location.href);
+      }
+    });
+
+    els.copyToday.addEventListener("click", async (e)=>{
+      e.preventDefault();
+      const t = DATA[state.lang];
+      const pack = t[state.region][state.mode];
+      const text = `${pack.quote}\n- ${pack.ref.join("\n- ")}`;
+      try{
+        await navigator.clipboard.writeText(text);
+        alert(state.lang==="ko" ? "오늘 텍스트 복사됨!" : "Today text copied!");
+      }catch{
+        prompt("Copy text:", text);
+      }
+    });
+
+    // Footer jump
+    els.jumpWhite.addEventListener("click", (e)=>{ e.preventDefault(); state.mode="white"; render(); window.scrollTo({top:0, behavior:"smooth"}); });
+    els.jumpDark.addEventListener("click", (e)=>{ e.preventDefault(); state.mode="dark"; render(); window.scrollTo({top:0, behavior:"smooth"}); });
+    els.jumpTop.addEventListener("click", (e)=>{ e.preventDefault(); window.scrollTo({top:0, behavior:"smooth"}); });
+
+    // init
+    els.year.textContent = String(new Date().getFullYear());
+    render();
+  </script>
+</body>
+</html>
